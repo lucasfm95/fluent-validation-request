@@ -9,11 +9,39 @@ namespace FluentValidationRequest.Domain.Validators
         {
             RuleFor((customer) => customer.DocumentNumber)
                 .NotEmpty()
-                .WithMessage("DocumentNumber field is required")
+                .NotNull()
+                .WithMessage("The DocumentNumber field is required")
                 .MinimumLength(11)
                 .WithMessage("The DocumentNumber field minimum length is 11")
                 .MaximumLength(14)
                 .WithMessage("The DocumentNumber field maximum length is 14");
+
+            RuleFor(customer => customer.FirstName)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("The FirstName field is required")
+                .MinimumLength(11)
+                .WithMessage("The FirstName field minimum length is 3")
+                .MaximumLength(14)
+                .WithMessage("The FirstName field maximum length is 100");
+
+            RuleFor(customer => customer.LastName)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("The LastName field is required")
+                .MinimumLength(11)
+                .WithMessage("The LastName field minimum length is 3")
+                .MaximumLength(14)
+                .WithMessage("The LastName field maximum length is 100");
+
+            RuleFor(customer => customer.Email)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("The Email field is required")
+                .MinimumLength(11)
+                .WithMessage("The Email field minimum length is 5")
+                .MaximumLength(14)
+                .WithMessage("The Email field maximum length is 100");
         }
     }
 }
