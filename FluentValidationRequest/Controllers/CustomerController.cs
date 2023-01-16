@@ -9,7 +9,7 @@ namespace FluentValidationRequest.Controllers
     public class CustomerController : ControllerBase
     {
         private static List<CustomerRequest> _customers = new List<CustomerRequest>();
-        private static readonly  CustomerValidator _customerValidator = new();
+        private static readonly CustomerValidator _customerValidator = new();
 
         [HttpGet]
         public IActionResult GetAll()
@@ -37,13 +37,18 @@ namespace FluentValidationRequest.Controllers
 
             if (result.IsValid)
             {
-                return Ok(customer);
+                var lastId = _customers?.LastOrDefault()?.Id ?? 0;
+                customer.Id = lastId + 1;
+
+                _customers?.Add(customer);
+
+                return CreatedAtAction(nameof(GetById),  new { id = customer.Id }, customer);
             }
 
             return BadRequest(result.Errors
                 .Select(p => p.ErrorMessage)
                 .ToArray());
-            //CreatedAtAction(nameof(GetById), new { Id: 1 }, customer);
+            
         }
     }
 }
