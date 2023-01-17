@@ -20,27 +20,27 @@ namespace FluentValidationRequest.Domain.Validators
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("The FirstName field is required")
-                .MinimumLength(11)
+                .MinimumLength(3)
                 .WithMessage("The FirstName field minimum length is 3")
-                .MaximumLength(14)
+                .MaximumLength(100)
                 .WithMessage("The FirstName field maximum length is 100");
 
             RuleFor(customer => customer.LastName)
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("The LastName field is required")
-                .MinimumLength(11)
+                .MinimumLength(3)
                 .WithMessage("The LastName field minimum length is 3")
-                .MaximumLength(14)
+                .MaximumLength(100)
                 .WithMessage("The LastName field maximum length is 100");
 
             RuleFor(customer => customer.Email)
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("The Email field is required")
-                .MinimumLength(11)
+                .MinimumLength(5)
                 .WithMessage("The Email field minimum length is 5")
-                .MaximumLength(14)
+                .MaximumLength(100)
                 .WithMessage("The Email field maximum length is 100");
         }
     }
