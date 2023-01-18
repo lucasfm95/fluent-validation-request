@@ -41,7 +41,18 @@ namespace FluentValidationRequest.Domain.Validators
                 .MinimumLength(5)
                 .WithMessage("The Email field minimum length is 5")
                 .MaximumLength(100)
-                .WithMessage("The Email field maximum length is 100");
+                .WithMessage("The Email field maximum length is 100")
+                .When(customer => customer.HasEmail);
+
+            RuleFor(customer => customer.BirthDate)
+                .NotEmpty()
+                .NotNull()
+                .LessThan(DateTime.Now);
+
+            RuleFor(customer => customer.CreatedAt)
+                .NotEmpty()
+                .NotNull()
+                .GreaterThanOrEqualTo(DateTime.Now.Date);
 
             When(customer => customer?.FamilyMembers?.Any() ?? false, () =>
             {
