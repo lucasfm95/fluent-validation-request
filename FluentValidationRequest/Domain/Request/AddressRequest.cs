@@ -1,7 +1,7 @@
 ﻿using System;
 namespace FluentValidationRequest.Domain.Request
 {
-	public class Address
+	public class AddressRequest
 	{
 		public string? Street { get; set; }
 		public string? City { get; set; }

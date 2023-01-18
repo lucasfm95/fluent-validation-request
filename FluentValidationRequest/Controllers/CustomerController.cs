@@ -8,7 +8,7 @@ namespace FluentValidationRequest.Controllers
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
-        private static List<CustomerRequest> _customers = new List<CustomerRequest>();
+        private static List<CustomerRequest> _customers = new();
         private static readonly CustomerValidator _customerValidator = new();
 
         [HttpGet]
@@ -35,20 +35,15 @@ namespace FluentValidationRequest.Controllers
         {
             var result = _customerValidator.Validate(customer);
 
-            if (result.IsValid)
-            {
-                var lastId = _customers?.LastOrDefault()?.Id ?? 0;
-                customer.Id = lastId + 1;
+            if (!result.IsValid) 
+                return BadRequest(result.Errors.Select(p => p.ErrorMessage).ToList());
 
-                _customers?.Add(customer);
+            var lastId = _customers.LastOrDefault()?.Id ?? 0;
+            customer.Id = lastId + 1;
 
-                return CreatedAtAction(nameof(GetById),  new { id = customer.Id }, customer);
-            }
+            _customers.Add(customer);
 
-            return BadRequest(result.Errors
-                .Select(p => p.ErrorMessage)
-                .ToArray());
-            
+            return CreatedAtAction(nameof(GetById),  new { id = customer.Id }, customer);
         }
     }
 }
